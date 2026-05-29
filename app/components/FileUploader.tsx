@@ -29,7 +29,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
     return (
         <div className="w-full">
             <div {...getRootProps()} className={cn(
-                "uplader-drag-area",
+                "uploader-drag-area",
                 isDragActive ? "border-violet-500 bg-slate-900/40" : ""
             )}>
                 <input {...getInputProps()} />
