@@ -49,3 +49,13 @@ Ensure you have the following installed on your machine:
    ```
 
 4. Open the local address shown in your terminal (usually [http://localhost:5173](http://localhost:5173) or [http://localhost:5174](http://localhost:5174)) in your browser.
+
+## 🌐 Deployment on Vercel
+
+To deploy **Resumind** on Vercel, ensure you configure your environment variables in your Vercel project settings:
+
+1. **Environment Variables**:
+   Secrets like `PUTER_CLIENT_ID`, `PUTER_CLIENT_SECRET`, or `NEXTAUTH_URL` work locally via a `.env.local` file, but must be added manually in the Vercel dashboard under **Project Settings > Environment Variables**.
+
+2. **Cross-Origin Headers (COOP/COEP)**:
+   Do **NOT** enable `Cross-Origin-Opener-Policy` (COOP) or `Cross-Origin-Embedder-Policy` (COEP) headers on Vercel or locally. Since Puter's login flow operates via a cross-origin popup (`puter.auth.signIn()`), enabling COOP (even as `same-origin-allow-popups`) will sever the window context connection between your app and the Puter popup. This results in the login hanging or failing with `INVALID_APP` / authentication errors.

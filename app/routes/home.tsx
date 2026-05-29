@@ -21,18 +21,21 @@ export default function Home() {
   useEffect(() => {
     const loadResumes = async () => {
       setLoadingResumes(true);
+      try {
+        const resumes = (await kv.list('resume:*', true)) as KVItem[];
+        const parsedResumes = resumes?.map((resume) => (
+            JSON.parse(resume.value) as Resume
+        ));
+        setResumes(parsedResumes || []);
+      } catch (error) {
+        console.error("Failed to load resumes:", error);
+        setResumes([]);
+      } finally {
+        setLoadingResumes(false);
+      }
+    };
 
-      const resumes = (await kv.list('resume:*', true)) as KVItem[];
-
-      const parsedResumes = resumes?.map((resume) => (
-          JSON.parse(resume.value) as Resume
-      ))
-
-      setResumes(parsedResumes || []);
-      setLoadingResumes(false);
-    }
-
-    loadResumes()
+    loadResumes();
   }, []);
 
   return <main className="relative min-h-screen">
